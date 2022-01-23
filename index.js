@@ -24,9 +24,10 @@ const calcData = [
   
   const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   
-  const Display = ({ output }) => (
+  const Display = ({ input, output }) => (
     <div className="output">
-      <span className="result" id='display'>{output}</span>
+      <span className="result">{output}</span>
+      <span id="display" className="input">{input}</span>
     </div>
   );
   
@@ -50,19 +51,21 @@ const Calculadora = () =>{
     const [output, setOutput] = React.useState("");
     const [calculatorData, setCalculatorData] = React.useState("");
 
-    const handleEnviar = () => {
+    const handleSubmit = () => {
+        console.log({ calculatorData });
+    
         const total = eval(calculatorData);
         setInput(total);
         setOutput(`${total} = ${total}`);
         setCalculatorData(`${total}`);
       };
     
-      const handleLimpiar = () => {
+      const handleClear = () => {
         setInput("0");
         setCalculatorData("");
       };
 
-      const handleNumeros = (value) => {
+      const handleNumbers = (value) => {
         if (!calculatorData.length) {
           setInput(`${value}`);
           setCalculatorData(`${value}`);
@@ -140,13 +143,13 @@ const Calculadora = () =>{
     
         switch (value) {
           case "=":
-            handleEnviar();
+            handleSubmit();
             break;
           case "AC":
-            handleLimpiar();
+            handleClear();
             break;
           case number:
-            handleNumeros(value);
+            handleNumbers(value);
             break;
           case ".":
             dotOperator(value);
